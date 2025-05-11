@@ -79,7 +79,7 @@ namespace Mythmatic.TurretSystem
             if (target != null)
             {
                 Vector3 direction = (target.transform.position - transform.position).normalized;
-                rb.velocity = direction * speed;
+                rb.linearVelocity = direction * speed;
             }
         }
 
@@ -108,12 +108,12 @@ namespace Mythmatic.TurretSystem
             transform.rotation = rotation;
 
             Vector3 newVelocity = Vector3.Lerp(
-                rb.velocity.normalized,
+                rb.linearVelocity.normalized,
                 directionToTarget,
                 homingStrength * Time.fixedDeltaTime
             ).normalized * speed;
 
-            rb.velocity = newVelocity;
+            rb.linearVelocity = newVelocity;
         }
 
         private void SpawnExplosion(Vector3 position)
