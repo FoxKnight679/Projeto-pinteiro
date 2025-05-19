@@ -507,9 +507,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d650f75d70814d4780dc753ae860707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6
-  gravity: -9
-  jumpHeight: 0.82
+  speed: 5
+  gravity: -10
+  jumpHeight: 1
   groundCheck: {fileID: 172941354}
   groundDistance: 0.4
   groundMask:
