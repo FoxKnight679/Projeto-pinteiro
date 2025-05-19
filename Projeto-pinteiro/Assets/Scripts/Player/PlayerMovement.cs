@@ -22,14 +22,18 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    private bool isJumping = false;
+
     void Update()
     {
-        // Verifica se está no chão
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        if (isGrounded && velocity.y < 0)
-            velocity.y = -2f;
 
-        // Entrada de movimento
+        if (isGrounded && velocity.y < 0)
+        {
+            velocity.y = -2f;
+            isJumping = false;
+        }
+
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
@@ -41,23 +45,26 @@ public class PlayerMovement : MonoBehaviour
 
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
 
-            // Rotaciona o personagem suavemente na direção
+            // Rotação contínua, mesmo no ar
             Quaternion toRotation = Quaternion.LookRotation(moveDir);
             transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, 10f * Time.deltaTime);
 
-            // Animação de corrida
-            animator.SetInteger("transition", 1);
+            if (!isJumping)
+                animator.SetInteger("transition", 1); // Corrida
         }
         else
         {
-            // Idle
-            animator.SetInteger("transition", 0);
+            if (!isJumping)
+                animator.SetInteger("transition", 0); // Idle
         }
 
         // Pulo
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            animator.SetInteger("transition", 4);
+            isJumping = true;
+
         }
 
         // Gravidade
@@ -70,6 +77,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetInteger("transition", 2);
         }
     }
+
 
 
     // Chame isso externamente quando o personagem morrer
