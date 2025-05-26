@@ -88,12 +88,17 @@ public class PlayerNovo : MonoBehaviour
         if (Input.GetButtonDown("Fire1") && !isAttacking)
         {
             isAttacking = true;
+            anim.ResetTrigger("attack"); // <- garante reuso imediato
             anim.SetTrigger("attack");
         }
     }
 
     public void EndAttack()
     {
+        Debug.Log("Fim do ataque");
         isAttacking = false;
+        anim.ResetTrigger("attack");
     }
+
+
 }
