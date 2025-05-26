@@ -11,7 +11,7 @@ public class ItemPickup : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // Procura o inventario na cena
-            InventoryUIManager inventory = FindObjectOfType<InventoryUIManager>();
+            InventoryUIManager inventory = FindFirstObjectByType<InventoryUIManager>();
             if (inventory != null)
             {
                 inventory.AddItem(itemName, itemIcon); // Adiciona o item ao inventario
