@@ -15,6 +15,8 @@ public class PlayerNovo : MonoBehaviour
     private float xRotation = 0f;
 
     private bool isAttacking = false;
+    private bool canMove = true;
+
 
     void Start()
     {
