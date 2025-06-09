@@ -9,6 +9,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 55270898537492505, guid: 045f1a98f6a884e4c97943d8a1292c19, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 55270898537492505, guid: 045f1a98f6a884e4c97943d8a1292c19, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 55270898537492505, guid: 045f1a98f6a884e4c97943d8a1292c19, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 55270898537492505, guid: 045f1a98f6a884e4c97943d8a1292c19, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.12
       objectReference: {fileID: 0}
@@ -48,9 +60,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 55270898537492505, guid: 045f1a98f6a884e4c97943d8a1292c19, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 833038638887348899, guid: 045f1a98f6a884e4c97943d8a1292c19, type: 3}
       propertyPath: m_Name
-      value: RobotGreem Variant
+      value: RobotGreemEnemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
