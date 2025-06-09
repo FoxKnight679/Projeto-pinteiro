@@ -9,6 +9,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1720707021437210172, guid: 3f6758deb1d17b145a0315d2d2530bb9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1720707021437210172, guid: 3f6758deb1d17b145a0315d2d2530bb9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1720707021437210172, guid: 3f6758deb1d17b145a0315d2d2530bb9, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1720707021437210172, guid: 3f6758deb1d17b145a0315d2d2530bb9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.5
       objectReference: {fileID: 0}
@@ -48,9 +60,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1720707021437210172, guid: 3f6758deb1d17b145a0315d2d2530bb9, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2065741863942968454, guid: 3f6758deb1d17b145a0315d2d2530bb9, type: 3}
       propertyPath: m_Name
-      value: Rio Variant
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 6918896819412299108, guid: 3f6758deb1d17b145a0315d2d2530bb9, type: 3}
       propertyPath: m_Enabled
