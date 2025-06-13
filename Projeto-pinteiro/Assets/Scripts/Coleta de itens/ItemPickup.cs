@@ -17,6 +17,10 @@ public class ItemPickup : MonoBehaviour
                 inventory.AddItem(itemName, itemIcon); // Adiciona o item ao inventario
                 Destroy(gameObject); // Remove o objeto da cena
             }
+            else
+            {
+                Debug.LogWarning("Inventário não encontrado na cena!");
+            }
         }
     }
 }
