@@ -3,13 +3,19 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     public int health = 100;
+    public int actualHealth;
+
+    public void Start()
+    {
+        actualHealth = health;
+    }
 
     public void TakeDamage(int amount)
     {
-        health -= amount;
+        actualHealth -= amount;
         Debug.Log("Dano recebido: " + amount);
 
-        if (health <= 0)
+        if (actualHealth <= 0)
         {
             Die();
         }
@@ -20,4 +26,10 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("Jogador morreu!");
         // Aqui você pode ativar animações, tela de game over etc.
     }
+
+    public void restoreHealht() {
+        actualHealth = health;
+        Debug.Log("Vida cheia.");
+    }
+
 }
