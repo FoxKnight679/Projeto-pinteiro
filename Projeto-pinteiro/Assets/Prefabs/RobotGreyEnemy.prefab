@@ -99,8 +99,8 @@ MonoBehaviour:
   damage: 10
   attackRange: 1.5
   attackCooldown: 2
-  detectionRange: 15
-  closeDetectionRange: 4
+  detectionRange: 20
+  closeDetectionRange: 5
   fieldOfView: 140
   rotationSpeedDuringAttack: 10
 --- !u!195 &1569920826683608672

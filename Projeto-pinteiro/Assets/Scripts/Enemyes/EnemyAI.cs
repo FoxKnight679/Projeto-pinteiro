@@ -150,7 +150,11 @@ public class EnemyAI : MonoBehaviour
     {
         agent.isStopped = false;
         agent.updateRotation = true;
-        agent.SetDestination(player.position);
+
+        bool success = agent.SetDestination(player.position);
+        if (!success)
+            Debug.LogWarning("Falha ao definir destino do inimigo!");
+
         animator.SetInteger("transition", 1);
     }
 
