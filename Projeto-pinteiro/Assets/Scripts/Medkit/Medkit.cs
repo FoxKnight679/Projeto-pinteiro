@@ -34,7 +34,7 @@ public class Medkit : MonoBehaviour {
 
             if (playerHealth != null) {
 
-                playerHealth.restoreHealht();
+                playerHealth.restoreHealth();
                 Debug.Log("Iniciando respawn");
                 StartCoroutine(disableShortly());
 
