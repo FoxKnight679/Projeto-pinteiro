@@ -6,8 +6,6 @@ public class WeaponVisualManager : MonoBehaviour
     public GameObject defaultWeaponPrefab;
     public GameObject secondWeaponPrefab; // Prefab que será coletado
 
-    private PlayerNovo playerController;
-
     private GameObject defaultWeaponInstance;
     private GameObject secondWeaponInstance;
 
@@ -15,8 +13,6 @@ public class WeaponVisualManager : MonoBehaviour
 
     void Start()
     {
-        playerController = FindObjectOfType<PlayerNovo>();
-
         // Instancia a arma padrão
         if (defaultWeaponPrefab != null)
         {
@@ -40,8 +36,6 @@ public class WeaponVisualManager : MonoBehaviour
 
     public void EquipWeaponByIndex(int index)
     {
-        playerController?.SetWeaponIndex(index);
-
         if (index == 0) // Slot 0 = arma coletável
         {
             if (hasSecondWeapon)

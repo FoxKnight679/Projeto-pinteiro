@@ -5,8 +5,6 @@ public class PlayerNovo : MonoBehaviour
     private CharacterController controller;
     private Animator anim;
 
-    private int currentWeaponIndex = 1; // Começa com a espada (índice 1 no seu UI)
-
     public float speed = 5f;
     public float jumpForce = 8f;
     public float gravity = -9.81f;
@@ -45,12 +43,6 @@ public class PlayerNovo : MonoBehaviour
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -80f, 80f);
         cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-    }
-
-    public void SetWeaponIndex(int index)
-    {
-        currentWeaponIndex = index;
-        anim.SetInteger("WeaponIndex", index);
     }
 
     private void HandleMovement()
@@ -98,18 +90,10 @@ public class PlayerNovo : MonoBehaviour
         if (Input.GetButtonDown("Fire1") && !isAttacking)
         {
             isAttacking = true;
-
-            if (currentWeaponIndex == 0) // Arma de fogo
-            {
-                anim.SetTrigger("attack"); // Trigger para atirar
-            }
-            else if (currentWeaponIndex == 1) // Espada
-            {
-                anim.SetTrigger("attack"); // Trigger para ataque corpo-a-corpo
-            }
+            anim.ResetTrigger("attack"); // <- garante reuso imediato
+            anim.SetTrigger("attack");
         }
     }
-
 
     public void EndAttack()
     {
