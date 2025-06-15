@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class InventoryUIManager : MonoBehaviour
 {
     public Image[] slotImages;      // Fundo do slot (para destaque)
@@ -8,11 +9,17 @@ public class InventoryUIManager : MonoBehaviour
     public Color normalColor = Color.white;
     public Color highlightColor = Color.yellow;
 
+    public GameObject collectedItemPrefab; // Prefab da arma coletada
+    private WeaponVisualManager weaponVisualManager;
+
+
     private int selectedIndex = 0;                  // Começa selecionado no slot da arma padrão
     private string[] items = new string[2];         // [0] = item coletável, [1] = arma padrão
 
     void Start()
     {
+        weaponVisualManager = FindObjectOfType<WeaponVisualManager>();
+
         // Slot 1 (índice 1) = arma padrão: sempre visível
         if (slotImages[1] != null) slotImages[1].enabled = true;
         if (slotIcons[1] != null)
@@ -35,16 +42,17 @@ public class InventoryUIManager : MonoBehaviour
         {
             if (!string.IsNullOrEmpty(items[0]))
             {
-                selectedIndex = 1;
+                selectedIndex = 0;
                 UpdateSlotHighlight();
+                weaponVisualManager?.EquipWeaponByIndex(0);
             }
         }
 
-        // Slot 1 (arma padrão) sempre pode ser selecionado
         if (Input.GetKeyDown(KeyCode.R))
         {
-            selectedIndex = 0;
+            selectedIndex = 1;
             UpdateSlotHighlight();
+            weaponVisualManager?.EquipWeaponByIndex(1);
         }
     }
 
@@ -59,6 +67,7 @@ public class InventoryUIManager : MonoBehaviour
 
     public void AddItem(string itemName, Sprite itemIcon)
     {
+        weaponVisualManager?.OnItemCollected(collectedItemPrefab);
         // Adiciona apenas no slot 0 (item coletável)
         int i = 0;
 
