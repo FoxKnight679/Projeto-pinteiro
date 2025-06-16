@@ -10,6 +10,8 @@ public class PlayerNovo : MonoBehaviour
     public float gravity = -9.81f;
     private float verticalVelocity;
 
+    public int currentWeaponIndex = 1; // 1 = arma padrão
+
     public Transform cameraTransform;
     public float mouseSensitivity = 2f;
     private float xRotation = 0f;
@@ -31,6 +33,8 @@ public class PlayerNovo : MonoBehaviour
         HandleMovement();
         HandleJump();
         HandleAttack();
+        anim.SetInteger("WeaponIndex", currentWeaponIndex);
+
     }
 
     private void HandleMouseLook()
@@ -85,15 +89,30 @@ public class PlayerNovo : MonoBehaviour
         // A lógica já está centralizada em HandleMovement()
     }
 
+    public void SetWeaponIndex(int index)
+    {
+        currentWeaponIndex = index;
+        anim.SetInteger("WeaponIndex", index);
+    }
+
+
     private void HandleAttack()
     {
         if (Input.GetButtonDown("Fire1") && !isAttacking)
         {
             isAttacking = true;
-            anim.ResetTrigger("attack"); // <- garante reuso imediato
-            anim.SetTrigger("attack");
+
+            if (currentWeaponIndex == 0) // Arma de fogo
+            {
+                anim.SetTrigger("attack"); // Trigger para atirar
+            }
+            else if (currentWeaponIndex == 1) // Espada
+            {
+                anim.SetTrigger("attack"); // Trigger para ataque corpo-a-corpo
+            }
         }
     }
+
 
     public void EndAttack()
     {

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class WeaponVisualManager : MonoBehaviour
 {
+    private PlayerNovo playerController;
+
     public Transform itemSlot; // Arraste o ItemSlot (na mão direita)
     public GameObject defaultWeaponPrefab;
     public GameObject secondWeaponPrefab; // Prefab que será coletado
@@ -13,6 +15,8 @@ public class WeaponVisualManager : MonoBehaviour
 
     void Start()
     {
+        playerController = FindObjectOfType<PlayerNovo>();
+
         // Instancia a arma padrão
         if (defaultWeaponPrefab != null)
         {
@@ -36,6 +40,8 @@ public class WeaponVisualManager : MonoBehaviour
 
     public void EquipWeaponByIndex(int index)
     {
+        playerController?.SetWeaponIndex(index);
+
         if (index == 0) // Slot 0 = arma coletável
         {
             if (hasSecondWeapon)
