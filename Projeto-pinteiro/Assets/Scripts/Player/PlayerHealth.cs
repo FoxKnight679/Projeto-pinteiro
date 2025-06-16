@@ -3,19 +3,19 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour {
 
-    public int maxHealth = 100; //Vida máxima do player
-    public int currentHealth; //Vida atual do player
+    public int maxHealth = 100;
+    public int currentHealth; 
 
-    public int maxShield = 0; //Escudo máximo do player
-    public int currentShield = 0; //Escudo atual do player
+    public int maxShield = 0;
+    public int currentShield = 0; 
 
     public Image HpBar;
     public Image ShieldBar;
 
     private void Start() {
 
-        currentHealth = maxHealth; //Aqui ele só iguala a vida atual a vida máxima
-        currentShield = 0; //Começa sem escudo, pra evitar bugs
+        currentHealth = maxHealth; 
+        currentShield = 0; 
         UpdateUI();
     }
 
