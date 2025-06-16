@@ -185,8 +185,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4279172864
+  m_fontColor: {r: 0, g: 1, b: 0.05528426, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -448,7 +448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.02922988, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -767,7 +767,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7768539143731497747, guid: 7140d6bd1a3d53b4cb6f0f05526d7489, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -390
+      value: -487
       objectReference: {fileID: 0}
     - target: {fileID: 7768539143731497747, guid: 7140d6bd1a3d53b4cb6f0f05526d7489, type: 3}
       propertyPath: m_LocalPosition.y
@@ -775,7 +775,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7768539143731497747, guid: 7140d6bd1a3d53b4cb6f0f05526d7489, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 59
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 7768539143731497747, guid: 7140d6bd1a3d53b4cb6f0f05526d7489, type: 3}
       propertyPath: m_LocalRotation.w
@@ -841,7 +841,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 55270898537492505, guid: 045f1a98f6a884e4c97943d8a1292c19, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1002
+      value: 1002.0041
       objectReference: {fileID: 0}
     - target: {fileID: 55270898537492505, guid: 045f1a98f6a884e4c97943d8a1292c19, type: 3}
       propertyPath: m_LocalPosition.y
@@ -849,11 +849,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 55270898537492505, guid: 045f1a98f6a884e4c97943d8a1292c19, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 235
+      value: 234.65344
       objectReference: {fileID: 0}
     - target: {fileID: 55270898537492505, guid: 045f1a98f6a884e4c97943d8a1292c19, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.50339025
+      value: -0.3928412
       objectReference: {fileID: 0}
     - target: {fileID: 55270898537492505, guid: 045f1a98f6a884e4c97943d8a1292c19, type: 3}
       propertyPath: m_LocalRotation.x
@@ -861,7 +861,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 55270898537492505, guid: 045f1a98f6a884e4c97943d8a1292c19, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.86405915
+      value: 0.9196063
       objectReference: {fileID: 0}
     - target: {fileID: 55270898537492505, guid: 045f1a98f6a884e4c97943d8a1292c19, type: 3}
       propertyPath: m_LocalRotation.z
@@ -873,7 +873,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 55270898537492505, guid: 045f1a98f6a884e4c97943d8a1292c19, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 240.449
+      value: 226.263
       objectReference: {fileID: 0}
     - target: {fileID: 55270898537492505, guid: 045f1a98f6a884e4c97943d8a1292c19, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -882,6 +882,14 @@ PrefabInstance:
     - target: {fileID: 833038638887348899, guid: 045f1a98f6a884e4c97943d8a1292c19, type: 3}
       propertyPath: m_Name
       value: RobotGreem
+      objectReference: {fileID: 0}
+    - target: {fileID: 833038638887348899, guid: 045f1a98f6a884e4c97943d8a1292c19, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 6207209616884083299, guid: 045f1a98f6a884e4c97943d8a1292c19, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1485,8 +1493,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
