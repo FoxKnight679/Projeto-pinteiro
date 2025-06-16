@@ -1104,6 +1104,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   attackPoint: {fileID: 2388476856211052182}
+  fireRange: 100
+  firePoint: {fileID: 0}
   cameraTransform: {fileID: 6286080710367073688}
   mouseSensitivity: 2
 --- !u!114 &146132169636401831
@@ -2402,13 +2404,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9050169075932552172}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7055779, y: 0.7067768, z: -0.04055827, w: -0.031326715}
+  m_LocalRotation: {x: 0.6974872, y: 0.7145318, z: -0.048468366, w: -0.02463471}
   m_LocalPosition: {x: -0.0641, y: 0.1001, z: -0.0222}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6164892166509182887}
-  m_LocalEulerAnglesHint: {x: 0.752, y: 185.827, z: 89.941}
+  m_LocalEulerAnglesHint: {x: 2, y: 185.905, z: 88.72}
 --- !u!1 &9051031427909365575
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ public class InventoryUIManager : MonoBehaviour
     private WeaponVisualManager weaponVisualManager;
 
 
-    private int selectedIndex = 0;                  // Começa selecionado no slot da arma padrão
+    private int selectedIndex = 1;                  // Começa selecionado no slot da arma padrão
     private string[] items = new string[2];         // [0] = item coletável, [1] = arma padrão
 
     void Start()
