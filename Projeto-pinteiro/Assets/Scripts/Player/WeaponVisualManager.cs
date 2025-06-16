@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class WeaponVisualManager : MonoBehaviour
 {
+    private PlayerNovo playerController;
+
     public Transform itemSlot; // Arraste o ItemSlot (na mão direita)
     public GameObject defaultWeaponPrefab;
     public GameObject secondWeaponPrefab; // Prefab que será coletado
-
-    private PlayerNovo playerController;
 
     private GameObject defaultWeaponInstance;
     private GameObject secondWeaponInstance;

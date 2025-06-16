@@ -5,12 +5,12 @@ public class PlayerNovo : MonoBehaviour
     private CharacterController controller;
     private Animator anim;
 
-    private int currentWeaponIndex = 1; // Começa com a espada (índice 1 no seu UI)
-
     public float speed = 5f;
     public float jumpForce = 8f;
     public float gravity = -9.81f;
     private float verticalVelocity;
+
+    public int currentWeaponIndex = 1; // 1 = arma padrão
 
     public Transform cameraTransform;
     public float mouseSensitivity = 2f;
@@ -33,6 +33,8 @@ public class PlayerNovo : MonoBehaviour
         HandleMovement();
         HandleJump();
         HandleAttack();
+        anim.SetInteger("WeaponIndex", currentWeaponIndex);
+
     }
 
     private void HandleMouseLook()
@@ -45,12 +47,6 @@ public class PlayerNovo : MonoBehaviour
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -80f, 80f);
         cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-    }
-
-    public void SetWeaponIndex(int index)
-    {
-        currentWeaponIndex = index;
-        anim.SetInteger("WeaponIndex", index);
     }
 
     private void HandleMovement()
@@ -92,6 +88,13 @@ public class PlayerNovo : MonoBehaviour
         // Essa função agora só controla gravidade e animação de pulo
         // A lógica já está centralizada em HandleMovement()
     }
+
+    public void SetWeaponIndex(int index)
+    {
+        currentWeaponIndex = index;
+        anim.SetInteger("WeaponIndex", index);
+    }
+
 
     private void HandleAttack()
     {
