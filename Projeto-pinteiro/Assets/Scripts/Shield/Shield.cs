@@ -5,7 +5,7 @@ public class Shield : MonoBehaviour {
 
     public int shieldAmount = 50;
     public float rotationSpeed = 50f;
-    public float respawnTime = 10f;
+    public float respawnTime = 90f;
     public GameObject shield;
 
     private Collider myCollider;

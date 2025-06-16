@@ -45,17 +45,16 @@ public class PlayerMovement : MonoBehaviour
 
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
 
-            // Rotação contínua, mesmo no ar
             Quaternion toRotation = Quaternion.LookRotation(moveDir);
             transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, 10f * Time.deltaTime);
 
             if (!isJumping)
-                animator.SetInteger("transition", 1); // Corrida
+                animator.SetInteger("transition", 1);
         }
         else
         {
             if (!isJumping)
-                animator.SetInteger("transition", 0); // Idle
+                animator.SetInteger("transition", 0);
         }
 
         // Pulo
@@ -78,11 +77,8 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
-
-    // Chame isso externamente quando o personagem morrer
     public void Die()
     {
-        animator.SetInteger("transition", 3); // Death
+        animator.SetInteger("transition", 3); 
     }
 }

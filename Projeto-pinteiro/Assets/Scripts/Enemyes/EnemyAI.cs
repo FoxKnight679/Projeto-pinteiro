@@ -39,7 +39,7 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        if (isDead) return;  // Para toda l�gica se estiver morto
+        if (isDead) return;
         if (player == null || animator == null || agent == null) return;
 
         float distance = Vector3.Distance(transform.position, player.position);
@@ -68,7 +68,7 @@ public class EnemyAI : MonoBehaviour
 
     private void HandleAttackState()
     {
-        if (isDead) return;  // Evita a��es se morto
+        if (isDead) return;
 
         agent.isStopped = true;
         agent.updateRotation = false;
@@ -104,7 +104,7 @@ public class EnemyAI : MonoBehaviour
 
     private void StartAttack()
     {
-        if (isDead) return;  // Evita ataque ap�s morte
+        if (isDead) return;
 
         float distance = Vector3.Distance(transform.position, player.position);
         if (distance > attackRange)
@@ -128,7 +128,7 @@ public class EnemyAI : MonoBehaviour
 
     private void EndAttack()
     {
-        if (isDead) return;  // Evita continuar ap�s morte
+        if (isDead) return;
 
         isAttacking = false;
         damageApplied = false;
@@ -238,7 +238,6 @@ public class EnemyAI : MonoBehaviour
         agent.updateRotation = false;
         agent.velocity = Vector3.zero;
 
-        // Se tiver Rigidbody, para movimento f�sico
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null)
         {
@@ -247,7 +246,6 @@ public class EnemyAI : MonoBehaviour
             rb.angularVelocity = Vector3.zero;
         }
 
-        // For�a anima��o de morte
         animator.SetInteger("transition", 5);
 
         Destroy(gameObject, 4.5f);

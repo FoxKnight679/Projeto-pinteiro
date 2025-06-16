@@ -4,9 +4,9 @@ public class WeaponVisualManager : MonoBehaviour
 {
     private PlayerNovo playerController;
 
-    public Transform itemSlot; // Arraste o ItemSlot (na mão direita)
+    public Transform itemSlot; 
     public GameObject defaultWeaponPrefab;
-    public GameObject secondWeaponPrefab; // Prefab que será coletado
+    public GameObject secondWeaponPrefab; 
 
     private GameObject defaultWeaponInstance;
     private GameObject secondWeaponInstance;
@@ -17,7 +17,6 @@ public class WeaponVisualManager : MonoBehaviour
     {
         playerController = FindObjectOfType<PlayerNovo>();
 
-        // Instancia a arma padrão
         if (defaultWeaponPrefab != null)
         {
             defaultWeaponInstance = Instantiate(defaultWeaponPrefab, itemSlot);

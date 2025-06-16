@@ -5,6 +5,6 @@ public class MenuManager : MonoBehaviour {
 
     public void Play() {
 
-        SceneManager.LoadScene("itens");
+        SceneManager.LoadScene("Game");
     }
 }

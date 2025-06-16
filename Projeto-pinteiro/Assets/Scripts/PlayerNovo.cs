@@ -6,13 +6,13 @@ public class PlayerNovo : MonoBehaviour
     private Animator anim;
 
     [Header("Movimento")]
-    public float speed = 5f;
+    public float speed = 7f;
     public float jumpForce = 8f;
     public float gravity = -9.81f;
     private float verticalVelocity;
 
     [Header("Armas e Combate")]
-    public int currentWeaponIndex = 1; // 0 = arma de fogo
+    public int currentWeaponIndex = 1; 
     public int attackDamage = 25;
     public float attackRange = 2f;
     public LayerMask enemyLayer;
@@ -51,10 +51,6 @@ public class PlayerNovo : MonoBehaviour
         DebugFirePoint();
 #endif
     }
-
-    // ---------------------------
-    // MOVIMENTO & CÂMERA
-    // ---------------------------
 
     private void HandleMouseLook()
     {
@@ -95,10 +91,6 @@ public class PlayerNovo : MonoBehaviour
         anim.SetBool("isWalking", isWalking);
     }
 
-    // ---------------------------
-    // COMBATE
-    // ---------------------------
-
     private void HandleAttack()
     {
         if (Input.GetButtonDown("Fire1") && !isAttacking && controller.isGrounded)
@@ -136,7 +128,6 @@ public class PlayerNovo : MonoBehaviour
         currentWeaponIndex = index;
         anim.SetInteger("WeaponIndex", index);
 
-        // Atualiza o firePoint sempre que troca de arma
         firePoint = null;
         UpdateFirePointReference();
     }
@@ -162,10 +153,6 @@ public class PlayerNovo : MonoBehaviour
             Debug.Log("Tiro não acertou nada.");
         }
     }
-
-    // ---------------------------
-    // FIREPOINT & DEBUG
-    // ---------------------------
 
     private void UpdateFirePointReference()
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 public class Medkit : MonoBehaviour {
     
     public float rotationSpeed = 50f;
-    public float respawnTime = 5f;
+    public float respawnTime = 90f;
     public GameObject medkit;
 
     private Collider myCollider;
