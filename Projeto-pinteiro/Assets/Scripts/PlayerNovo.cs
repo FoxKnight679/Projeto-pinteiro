@@ -10,15 +10,17 @@ public class PlayerNovo : MonoBehaviour
     public float gravity = -9.81f;
     private float verticalVelocity;
 
-    public int currentWeaponIndex = 1; // 1 = arma padrão
+    public int currentWeaponIndex = 1;
+    public int attackDamage = 25;
+    public float attackRange = 2f;
+    public LayerMask enemyLayer;
+    public Transform attackPoint;
 
     public Transform cameraTransform;
     public float mouseSensitivity = 2f;
     private float xRotation = 0f;
 
     private bool isAttacking = false;
-    private bool canMove = true;
-
 
     void Start()
     {
@@ -34,7 +36,6 @@ public class PlayerNovo : MonoBehaviour
         HandleJump();
         HandleAttack();
         anim.SetInteger("WeaponIndex", currentWeaponIndex);
-
     }
 
     private void HandleMouseLook()
@@ -43,7 +44,6 @@ public class PlayerNovo : MonoBehaviour
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
         transform.Rotate(Vector3.up * mouseX);
-
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -80f, 80f);
         cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
@@ -55,39 +55,29 @@ public class PlayerNovo : MonoBehaviour
         float moveZ = Input.GetAxis("Vertical");
         Vector3 move = transform.right * moveX + transform.forward * moveZ;
 
-        // Aplica movimento horizontal
         Vector3 movement = move * speed;
-
-        // Aplica velocidade vertical (gravidade ou pulo)
         verticalVelocity += gravity * Time.deltaTime;
 
-        // Aplica salto
         if (controller.isGrounded && verticalVelocity < 0)
         {
             verticalVelocity = -2f;
-            anim.SetBool("isJumping", false); // Reset no chão
+            anim.SetBool("isJumping", false);
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && controller.isGrounded)
         {
             verticalVelocity = jumpForce;
-            anim.SetBool("isJumping", true); // Ativa animação de pulo
+            anim.SetBool("isJumping", true);
         }
 
         movement.y = verticalVelocity;
-
         controller.Move(movement * Time.deltaTime);
 
-        // Animação de caminhada (apenas se estiver no chão)
         bool isWalking = controller.isGrounded && (moveX != 0 || moveZ != 0);
         anim.SetBool("isWalking", isWalking);
     }
 
-    private void HandleJump()
-    {
-        // Essa função agora só controla gravidade e animação de pulo
-        // A lógica já está centralizada em HandleMovement()
-    }
+    private void HandleJump() { }
 
     public void SetWeaponIndex(int index)
     {
@@ -95,24 +85,27 @@ public class PlayerNovo : MonoBehaviour
         anim.SetInteger("WeaponIndex", index);
     }
 
-
     private void HandleAttack()
     {
-        if (Input.GetButtonDown("Fire1") && !isAttacking)
+        if (Input.GetButtonDown("Fire1") && !isAttacking && controller.isGrounded)
         {
             isAttacking = true;
-
-            if (currentWeaponIndex == 0) // Arma de fogo
+            anim.SetTrigger("attack");
+        }
+    }
+    public void DealDamage()
+    {
+        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
+        Debug.Log($"Inimigos atingidos: {hitEnemies.Length}");
+        foreach (Collider enemy in hitEnemies)
+        {
+            if (enemy.TryGetComponent(out EnemyAI enemyAI))
             {
-                anim.SetTrigger("attack"); // Trigger para atirar
-            }
-            else if (currentWeaponIndex == 1) // Espada
-            {
-                anim.SetTrigger("attack"); // Trigger para ataque corpo-a-corpo
+                Debug.Log($"Dando dano ao inimigo: {enemy.name}");
+                enemyAI.TakeDamage(attackDamage);
             }
         }
     }
-
 
     public void EndAttack()
     {
@@ -121,5 +114,15 @@ public class PlayerNovo : MonoBehaviour
         anim.ResetTrigger("attack");
     }
 
-
+    private void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null) return;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        if (cameraTransform != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawRay(cameraTransform.position, cameraTransform.forward * attackRange);
+        }
+    }
 }
