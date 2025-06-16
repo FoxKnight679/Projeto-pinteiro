@@ -1007,6 +1007,7 @@ GameObject:
   - component: {fileID: 146132169636401831}
   - component: {fileID: 3730486135402531000}
   - component: {fileID: 5290607310677364584}
+  - component: {fileID: 5366155812182935704}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -1031,6 +1032,7 @@ Transform:
   - {fileID: 288493065177613787}
   - {fileID: 7526074710033031036}
   - {fileID: 6286080710367073688}
+  - {fileID: 2388476856211052182}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7564016015644562485
@@ -1096,6 +1098,12 @@ MonoBehaviour:
   jumpForce: 5
   gravity: -9.81
   currentWeaponIndex: 1
+  attackDamage: 33
+  attackRange: 1.3
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  attackPoint: {fileID: 2388476856211052182}
   cameraTransform: {fileID: 6286080710367073688}
   mouseSensitivity: 2
 --- !u!114 &146132169636401831
@@ -1144,6 +1152,33 @@ MonoBehaviour:
   itemSlot: {fileID: 4806876034455871358}
   defaultWeaponPrefab: {fileID: 8402615430325231792, guid: 0d27191d09d038944b08e441f1cf4169, type: 3}
   secondWeaponPrefab: {fileID: 0}
+--- !u!54 &5366155812182935704
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3842472105707934965}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &4233697795060795587
 GameObject:
   m_ObjectHideFlags: 0
@@ -2247,6 +2282,37 @@ Transform:
   - {fileID: 755211136679012034}
   - {fileID: 6209755746896876491}
   m_Father: {fileID: 288493065177613787}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8729175240099766814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2388476856211052182}
+  m_Layer: 7
+  m_Name: AttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2388476856211052182
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8729175240099766814}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.17, y: 0.92, z: 0.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4474577644337352271}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8766400615555607199
 GameObject:

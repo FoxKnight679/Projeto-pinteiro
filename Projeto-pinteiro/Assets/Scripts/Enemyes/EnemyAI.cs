@@ -3,20 +3,22 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
+    public int maxHealth = 100;
+    public int currentHealth;
+
     [Header("Combate")]
     public int damage = 10;
     public float attackRange = 1.5f;
     public float attackCooldown = 2f;
 
-    [Header("Detecção")]
+    [Header("Detecï¿½ï¿½o")]
     public float detectionRange = 10f;
-    public float closeDetectionRange = 3f;  // Área de detecção próxima (360°)
+    public float closeDetectionRange = 3f;
     [Range(0, 360)] public float fieldOfView = 120f;
 
-    [Header("Animação")]
+    [Header("Animaï¿½ï¿½o")]
     public float rotationSpeedDuringAttack = 5f;
 
-    [Header("Internos")]
     private float lastAttackTime;
     private bool isAttacking = false;
     private bool damageApplied = false;
@@ -25,39 +27,35 @@ public class EnemyAI : MonoBehaviour
     private Transform player;
     private Animator animator;
     private NavMeshAgent agent;
+    private bool isDead = false;
 
-    private void Start()
+    void Start()
     {
+        currentHealth = maxHealth;
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
     }
 
-    private void Update()
+    void Update()
     {
+        if (isDead) return;  // Para toda lï¿½gica se estiver morto
         if (player == null || animator == null || agent == null) return;
 
         float distance = Vector3.Distance(transform.position, player.position);
 
-        // Se está atacando, processar estado de ataque
         if (isAttacking)
         {
             HandleAttackState();
             return;
         }
 
-        // Se ainda está em animação de ataque, não fazer nada
         if (IsCurrentlyInAttackAnimation()) return;
 
-        // Se jogador está no alcance de ataque
-        if (distance <= attackRange)
+        if (distance <= attackRange && Time.time >= lastAttackTime + attackCooldown)
         {
-            if (Time.time >= lastAttackTime + attackCooldown)
-                StartAttack();
-            else
-                SetIdle();
+            StartAttack();
         }
-        // Se jogador está visível OU na área próxima
         else if (PlayerInSight() || PlayerInCloseRange())
         {
             ChasePlayer();
@@ -70,25 +68,33 @@ public class EnemyAI : MonoBehaviour
 
     private void HandleAttackState()
     {
+        if (isDead) return;  // Evita aï¿½ï¿½es se morto
+
         agent.isStopped = true;
         agent.updateRotation = false;
-
-        AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
-
-        // Rotacionar durante o ataque para manter o alvo
         RotateTowardsPlayer(rotationSpeedDuringAttack);
 
-        // Lógica de dano durante a animação
+        AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
         if (state.IsTag("Attack"))
         {
-            // Aplicar dano no ponto certo da animação
             if (!damageApplied && state.normalizedTime >= 0.5f)
             {
-                DealDamage();
+                float distToPlayer = Vector3.Distance(transform.position, player.position);
+                if (distToPlayer <= attackRange)
+                {
+                    Vector3 direction = (player.position - transform.position).normalized;
+                    Vector3 rayOrigin = transform.position + Vector3.up * 1.5f; // ajuste de altura
+                    if (Physics.Raycast(rayOrigin, direction, out RaycastHit hit, attackRange))
+                    {
+                        if (hit.transform.CompareTag("Player"))
+                        {
+                            player.GetComponent<PlayerHealth>()?.TakeDamage(damage);
+                        }
+                    }
+                }
                 damageApplied = true;
             }
 
-            // Final do ataque - decidir próximo estado
             if (state.normalizedTime >= 0.95f)
             {
                 EndAttack();
@@ -98,16 +104,15 @@ public class EnemyAI : MonoBehaviour
 
     private void StartAttack()
     {
-        float distance = Vector3.Distance(transform.position, player.position);
+        if (isDead) return;  // Evita ataque apï¿½s morte
 
-        // Se jogador saiu do alcance antes de iniciar o ataque
+        float distance = Vector3.Distance(transform.position, player.position);
         if (distance > attackRange)
         {
             ChasePlayer();
             return;
         }
 
-        // Orientar-se para o jogador antes de atacar
         RotateTowardsPlayer(rotationSpeedDuringAttack * 2f);
 
         isAttacking = true;
@@ -123,36 +128,38 @@ public class EnemyAI : MonoBehaviour
 
     private void EndAttack()
     {
+        if (isDead) return;  // Evita continuar apï¿½s morte
+
         isAttacking = false;
         damageApplied = false;
         agent.updateRotation = true;
 
-        // Verificação de detecção após o ataque
         if (PlayerInSight() || PlayerInCloseRange())
         {
-            // Se o jogador está na visão, perseguir
             ChasePlayer();
         }
         else
         {
-            // Se não está na visão, ficar em idle
             SetIdle();
         }
     }
 
     private void SetIdle()
     {
+        if (isDead) return;
+
         agent.isStopped = true;
         animator.SetInteger("transition", 0);
     }
 
     private void ChasePlayer()
     {
+        if (isDead) return;
+
         agent.isStopped = false;
         agent.updateRotation = true;
 
-        bool success = agent.SetDestination(player.position);
-        if (!success)
+        if (!agent.SetDestination(player.position))
             Debug.LogWarning("Falha ao definir destino do inimigo!");
 
         animator.SetInteger("transition", 1);
@@ -160,12 +167,14 @@ public class EnemyAI : MonoBehaviour
 
     private bool PlayerInCloseRange()
     {
-        float distance = Vector3.Distance(transform.position, player.position);
-        return distance <= closeDetectionRange;
+        if (isDead) return false;
+        return Vector3.Distance(transform.position, player.position) <= closeDetectionRange;
     }
 
     private void RotateTowardsPlayer(float speed)
     {
+        if (isDead) return;
+
         Vector3 direction = (player.position - transform.position).normalized;
         if (direction != Vector3.zero)
         {
@@ -176,23 +185,20 @@ public class EnemyAI : MonoBehaviour
 
     private bool IsCurrentlyInAttackAnimation()
     {
+        if (isDead) return false;
         AnimatorStateInfo state = animator.GetCurrentAnimatorStateInfo(0);
         return state.IsTag("Attack") && state.normalizedTime < 1.0f;
     }
 
-    private void DealDamage()
-    {
-        player?.GetComponent<PlayerHealth>()?.TakeDamage(damage);
-    }
-
     private int RandomAttack()
     {
-        int[] attackTransitions = { 2, 3, 4 };
-        return attackTransitions[Random.Range(0, attackTransitions.Length)];
+        return new int[] { 2, 3, 4 }[Random.Range(0, 3)];
     }
 
     private bool PlayerInSight()
     {
+        if (isDead) return false;
+
         Vector3 directionToPlayer = (player.position - transform.position).normalized;
         float distance = Vector3.Distance(transform.position, player.position);
 
@@ -201,7 +207,6 @@ public class EnemyAI : MonoBehaviour
         float angle = Vector3.Angle(transform.forward, directionToPlayer);
         if (angle > fieldOfView / 2f) return false;
 
-        // Verificação de obstáculos
         if (Physics.Raycast(transform.position + Vector3.up, directionToPlayer, out RaycastHit hit, detectionRange))
         {
             if (!hit.transform.CompareTag("Player")) return false;
@@ -210,25 +215,50 @@ public class EnemyAI : MonoBehaviour
         return true;
     }
 
+    public void TakeDamage(int amount)
+    {
+        if (isDead) return;
+
+        Debug.Log("Inimigo recebeu dano: " + amount);
+        currentHealth -= amount;
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
     public void Die()
     {
+        if (isDead) return;
+
+        isDead = true;
         isAttacking = false;
+
         agent.isStopped = true;
         agent.updateRotation = false;
+        agent.velocity = Vector3.zero;
 
+        // Se tiver Rigidbody, para movimento fï¿½sico
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = true;
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+
+        // Forï¿½a animaï¿½ï¿½o de morte
         animator.SetInteger("transition", 5);
-        Destroy(gameObject, 3f);
+
+        Destroy(gameObject, 4.5f);
     }
 
 #if UNITY_EDITOR
-    // Visualização dos campos de detecção
     private void OnDrawGizmosSelected()
     {
-        // Área de detecção próxima (360°)
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, closeDetectionRange);
 
-        // Campo de visão principal
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detectionRange);
 
