@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public class PlayerNovo : MonoBehaviour
-{
+public class PlayerNovo : MonoBehaviour {
     private CharacterController controller;
     private Animator anim;
 
@@ -22,15 +21,20 @@ public class PlayerNovo : MonoBehaviour
 
     private bool isAttacking = false;
 
-    void Start()
-    {
+    void Start() {
+
         controller = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    void Update()
-    {
+    void Update() {
+
+        if (GameOverManager.isGameOver) {
+
+            return;
+        }
+
         HandleMouseLook();
         HandleMovement();
         HandleJump();
@@ -38,8 +42,8 @@ public class PlayerNovo : MonoBehaviour
         anim.SetInteger("WeaponIndex", currentWeaponIndex);
     }
 
-    private void HandleMouseLook()
-    {
+    private void HandleMouseLook() {
+
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
@@ -49,8 +53,8 @@ public class PlayerNovo : MonoBehaviour
         cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
     }
 
-    private void HandleMovement()
-    {
+    private void HandleMovement() {
+
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
         Vector3 move = transform.right * moveX + transform.forward * moveZ;
@@ -58,14 +62,14 @@ public class PlayerNovo : MonoBehaviour
         Vector3 movement = move * speed;
         verticalVelocity += gravity * Time.deltaTime;
 
-        if (controller.isGrounded && verticalVelocity < 0)
-        {
+        if (controller.isGrounded && verticalVelocity < 0) {
+
             verticalVelocity = -2f;
             anim.SetBool("isJumping", false);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && controller.isGrounded)
-        {
+        if (Input.GetKeyDown(KeyCode.Space) && controller.isGrounded) {
+
             verticalVelocity = jumpForce;
             anim.SetBool("isJumping", true);
         }
@@ -79,48 +83,50 @@ public class PlayerNovo : MonoBehaviour
 
     private void HandleJump() { }
 
-    public void SetWeaponIndex(int index)
-    {
+    public void SetWeaponIndex(int index) {
+
         currentWeaponIndex = index;
         anim.SetInteger("WeaponIndex", index);
     }
 
-    private void HandleAttack()
-    {
-        if (Input.GetButtonDown("Fire1") && !isAttacking && controller.isGrounded)
-        {
+    private void HandleAttack() {
+
+        if (Input.GetButtonDown("Fire1") && !isAttacking && controller.isGrounded) {
+
             isAttacking = true;
             anim.SetTrigger("attack");
         }
     }
-    public void DealDamage()
-    {
+    public void DealDamage() {
+
         Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayer);
         Debug.Log($"Inimigos atingidos: {hitEnemies.Length}");
-        foreach (Collider enemy in hitEnemies)
-        {
-            if (enemy.TryGetComponent(out EnemyAI enemyAI))
-            {
+
+        foreach (Collider enemy in hitEnemies) {
+
+            if (enemy.TryGetComponent(out EnemyAI enemyAI)) {
+
                 Debug.Log($"Dando dano ao inimigo: {enemy.name}");
                 enemyAI.TakeDamage(attackDamage);
             }
         }
     }
 
-    public void EndAttack()
-    {
+    public void EndAttack() {
+
         Debug.Log("Fim do ataque");
         isAttacking = false;
         anim.ResetTrigger("attack");
     }
 
-    private void OnDrawGizmosSelected()
-    {
+    private void OnDrawGizmosSelected() {
+
         if (attackPoint == null) return;
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
-        if (cameraTransform != null)
-        {
+
+        if (cameraTransform != null) {
+
             Gizmos.color = Color.red;
             Gizmos.DrawRay(cameraTransform.position, cameraTransform.forward * attackRange);
         }
